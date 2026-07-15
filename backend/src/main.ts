@@ -25,5 +25,11 @@ async function bootstrap() {
   const port = process.env.PORT ?? 4000;
   await app.listen(port, '0.0.0.0');
   console.log(`API CONECTA en puerto ${port} · docs en /api/docs`);
+
+  const corsOrigin = process.env.CORS_ORIGIN?.trim();
+  app.enableCors({
+    origin: !corsOrigin || corsOrigin === '*' ? true : corsOrigin.split(','),
+    credentials: false,
+  });
 }
 bootstrap();
