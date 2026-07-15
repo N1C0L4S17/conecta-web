@@ -1,0 +1,128 @@
+// CONECTA URP - Modelo de datos
+// Diseño en estrella: RespuestaEncuesta (hecho) + dimensiones normalizadas.
+// Preparado para múltiples campañas/encuestas y crecimiento futuro.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────── DIMENSIONES ───────────────────────────
+
+model Campania {
+  id          Int                @id @default(autoincrement())
+  anio        Int                @unique
+  nombre      String
+  activa      Boolean            @default(true)
+  createdAt   DateTime           @default(now())
+  respuestas  RespuestaEncuesta[]
+}
+
+model Escuela {
+  id          Int                @id @default(autoincrement())
+  nombre      String             @unique
+  facultad    String
+  respuestas  RespuestaEncuesta[]
+
+  @@index([facultad])
+}
+
+model Rubro {
+  id          Int                @id @default(autoincrement())
+  nombre      String             @unique
+  respuestas  RespuestaEncuesta[]
+}
+
+model NivelCargo {
+  id          Int                @id @default(autoincrement())
+  nombre      String             @unique
+  respuestas  RespuestaEncuesta[]
+}
+
+// ─────────────────────────── HECHO ───────────────────────────
+
+model RespuestaEncuesta {
+  id                 Int              @id @default(autoincrement())
+
+  campania           Campania         @relation(fields: [campaniaId], references: [id])
+  campaniaId         Int
+
+  escuela            Escuela?         @relation(fields: [escuelaId], references: [id])
+  escuelaId          Int?
+
+  rubro              Rubro?           @relation(fields: [rubroId], references: [id])
+  rubroId            Int?
+
+  nivelCargo         NivelCargo?      @relation(fields: [nivelCargoId], references: [id])
+  nivelCargoId       Int?
+
+  anioEgreso         Int?
+  anioTitulacion     Int?
+  grado              String?
+
+  trabajando         Boolean          @default(false)
+  tieneNegocio       Boolean          @default(false)  // ¿cuenta con negocio propio?
+  tipoEmpleo         TipoEmpleo?      // formalidad (estandarizado)
+  tipoEmpresa        TipoEmpleo?      // sector empleador (privado/público)
+  cargoTexto         String?
+  correspondencia    Correspondencia?
+  satisfaccion       Int?             // escala 1-5
+  tiempoPrimerEmpleo TiempoEmpleo?
+  calidadFormacion   Int?             // escala 1-5
+  ubicacion          String?
+
+  createdAt          DateTime         @default(now())
+
+  @@index([campaniaId])
+  @@index([escuelaId])
+  @@index([rubroId])
+  @@index([anioEgreso])
+  @@index([trabajando])
+  @@index([tieneNegocio])
+  @@index([tipoEmpleo])
+  @@index([tipoEmpresa])
+}
+
+// ─────────────────────────── AUTENTICACIÓN ───────────────────────────
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  nombre       String
+  passwordHash String
+  rol          Rol      @default(CONSULTA)
+  activo       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+// ─────────────────────────── ENUMS ───────────────────────────
+
+enum Rol {
+  ADMIN
+  ANALISTA
+  CONSULTA
+}
+
+enum TipoEmpleo {
+  PRIVADA
+  PUBLICA
+}
+
+enum Correspondencia {
+  TOTALMENTE
+  MUCHO
+  POCO
+  NADA
+}
+
+enum TiempoEmpleo {
+  MENOS_3M
+  ENTRE_3_6M
+  ENTRE_6_12M
+  ENTRE_1_2A
+  MAS_2A
+}
