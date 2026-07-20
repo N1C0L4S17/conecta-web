@@ -26,12 +26,16 @@ export function Nav() {
   const rol = user?.rol ?? 'CONSULTA';
 
   return (
-    <header className="bg-white border-b sticky top-0 z-10">
+    <header className="bg-forest sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 text-brand">
-            <BarChart3 size={22} />
-            <span className="font-semibold text-ink">CONECTA URP</span>
+          <div className="flex items-center gap-2 text-white">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
+            </span>
+            <BarChart3 size={20} />
+            <span className="font-display font-semibold tracking-tight">CONECTA URP</span>
           </div>
           <nav className="flex items-center gap-1">
             {LINKS.filter((l) => l.roles.includes(rol)).map((l) => {
@@ -39,18 +43,19 @@ export function Nav() {
               const Icon = l.icon;
               return (
                 <Link key={l.href} href={l.href}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm ${
-                    active ? 'bg-brand-light text-brand font-medium' : 'text-muted hover:bg-neutral-100'
+                  className={`relative flex items-center gap-1.5 px-3 py-1.5 text-sm transition-colors ${
+                    active ? 'text-white font-medium' : 'text-forest-light/70 hover:text-white'
                   }`}>
                   <Icon size={15} /> {l.label}
+                  {active && <span className="absolute left-3 right-3 -bottom-[1px] h-[2px] bg-brand rounded-full" />}
                 </Link>
               );
             })}
           </nav>
         </div>
         <div className="flex items-center gap-4 text-sm">
-          <span className="text-muted hidden sm:inline">{user?.nombre} · {rol}</span>
-          <button onClick={logout} className="flex items-center gap-1 text-muted hover:text-brand">
+          <span className="text-forest-light/70 hidden sm:inline">{user?.nombre} · {rol}</span>
+          <button onClick={logout} className="flex items-center gap-1 text-forest-light/70 hover:text-brand transition-colors">
             <LogOut size={16} /> Salir
           </button>
         </div>

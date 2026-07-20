@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 :root { --radius: 8px; }
-body { background: #FAFAFA; color: #242424; }
+body { background: theme('colors.paper'); color: theme('colors.ink'); font-family: theme('fontFamily.sans'); }
 
-/* Tarjeta estilo Fabric / Power BI Service */
+/* Tarjeta minimalista con línea de señal superior (verde → magenta → verde) */
 .card {
-  @apply bg-white rounded-lg border border-neutral-200 shadow-sm;
+  @apply relative bg-white rounded-lg border border-mist shadow-sm overflow-hidden;
+}
+.card::before {
+  content: '';
+  @apply absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-forest via-brand to-forest opacity-0 transition-opacity duration-300;
 }
 .card-hover { @apply transition-shadow hover:shadow-md; }
+.card-hover:hover::before { @apply opacity-100; }

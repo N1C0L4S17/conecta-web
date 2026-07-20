@@ -1,8 +1,7 @@
 'use client';
-
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { BarChart3, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { BarChart3 } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -13,113 +12,46 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const submit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-
-    setError('');
-
-    if (!email.trim() || !password.trim()) {
-      setError('Ingrese su correo y contraseña');
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      await login(email.trim(), password);
-    } catch (e: any) {
-      setError(e.message || 'Correo o contraseña incorrectos');
-    } finally {
-      setLoading(false);
-    }
+  const submit = async () => {
+    setError(''); setLoading(true);
+    try { await login(email, password); }
+    catch (e: any) { setError(e.message); }
+    finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen grid place-items-center bg-gradient-to-br from-brand-light to-white px-4">
-      <div className="card w-full max-w-sm p-8">
+    <div className="min-h-screen grid place-items-center bg-forest relative overflow-hidden px-4">
+      {/* Grilla técnica sutil de fondo */}
+      <div className="absolute inset-0 opacity-[0.06]"
+        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+      <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-brand/20 blur-3xl" />
 
-        <div className="flex items-center gap-2 text-brand mb-6">
-          <BarChart3 size={28} />
-
-          <div>
-            <h1 className="text-lg font-semibold text-ink">
-              CONECTA URP
-            </h1>
-
-            <p className="text-xs text-muted">
-              Analítica de Egresados
-            </p>
-          </div>
+      <div className="relative w-full max-w-sm bg-paper rounded-xl border border-forest-dark/40 shadow-2xl p-8">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
+          </span>
+          <BarChart3 size={22} className="text-forest" />
+          <h1 className="font-display text-lg font-semibold text-ink">CONECTA URP</h1>
         </div>
+        <p className="text-xs text-muted font-mono uppercase tracking-wider mb-6">Analítica de Egresados</p>
 
-        <form onSubmit={submit}>
-
-          <label className="block text-sm text-muted mb-1">
-            Correo electrónico
-          </label>
-
-          <input
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="usuario@urp.edu.pe"
-            className="w-full border rounded-md px-3 py-2 mb-4 text-sm"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <label className="block text-sm text-muted mb-1">
-            Contraseña
-          </label>
-
-          <div className="relative mb-4">
-
-            <input
-              type={mostrarPassword ? 'text' : 'password'}
-              required
-              autoComplete="current-password"
-              placeholder="Ingrese su contraseña"
-              className="w-full border rounded-md px-3 py-2 pr-10 text-sm"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button
-              type="button"
-              onClick={() => setMostrarPassword(!mostrarPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-ink"
-            >
-              {mostrarPassword ? (
-                <EyeOff size={18} />
-              ) : (
-                <Eye size={18} />
-              )}
-            </button>
-
-          </div>
-
-          {error && (
-            <p className="text-sm text-red-600 mb-3">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-brand hover:bg-brand-dark text-white rounded-md py-2 text-sm font-medium disabled:opacity-50 flex items-center justify-center gap-2"
-          >
-            {loading && <Loader2 size={16} className="animate-spin" />}
-
-            {loading ? 'Ingresando…' : 'Iniciar sesión'}
-          </button>
-
-        </form>
-
-        <p className="text-xs text-muted mt-5 text-center">
+        <label className="block text-sm text-muted mb-1">Correo electrónico</label>
+        <input className="w-full border border-mist rounded-md px-3 py-2 mb-4 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
+          value={email} onChange={(e) => setEmail(e.target.value)} />
+        <label className="block text-sm text-muted mb-1">Contraseña</label>
+        <input type="password" className="w-full border border-mist rounded-md px-3 py-2 mb-4 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
+          value={password} onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && submit()} />
+        {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
+        <button onClick={submit} disabled={loading}
+          className="w-full bg-brand hover:bg-brand-dark text-white rounded-md py-2 text-sm font-medium disabled:opacity-50 transition-colors">
+          {loading ? 'Ingresando…' : 'Iniciar sesión'}
+        </button>
+        <p className="text-xs text-muted mt-4 text-center font-mono">
           Acceso exclusivo para usuarios registrados.
         </p>
-
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export function KpiCard({ titulo, valor, formato, detalle }: Props) {
     <div className="card card-hover p-4 flex flex-col justify-between min-h-[104px]">
       <span className="text-xs font-medium text-muted uppercase tracking-wide">{titulo}</span>
       <div>
-        <div className="text-3xl font-semibold text-brand leading-tight">{texto}</div>
+        <div className="font-mono text-3xl font-semibold text-forest leading-tight tabular-nums">{texto}</div>
         {detalle && <div className="text-xs text-muted mt-0.5">{detalle}</div>}
       </div>
     </div>
