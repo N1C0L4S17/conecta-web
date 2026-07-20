@@ -27,7 +27,13 @@ export default function AdminPage() {
     setError(''); setCreando(true);
     try {
       await api.crearUsuario(form);
-      setForm({ nombre: '', email: '', password: '', rol: 'CONSULTA' });
+      setForm({
+                nombre: '',
+                email: '',
+                password: '',
+                confirmarPassword: '',
+                rol: 'CONSULTA'
+              });
       cargar();
     } catch (e: any) { setError(e.message); }
     finally { setCreando(false); }
