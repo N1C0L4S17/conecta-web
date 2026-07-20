@@ -64,8 +64,10 @@ export class ReportsService {
       { header: 'Detalle', key: 'd', width: 20 },
     ];
     kh.getRow(1).font = { bold: true };
-    kpi.kpis.forEach((k: any) =>
-      kh.addRow({ t: k.titulo, v: `${(k.valor * 100).toFixed(1)}%`, d: k.detalle ?? '' }));
+    kpi.kpis.forEach((k: any) => {
+      const v = k.formato === 'indice' ? `${k.valor}/5` : `${Math.round(k.valor * 100)}%`;
+      kh.addRow({ t: k.titulo, v, d: k.detalle ?? '' });
+    });
     kh.addRow({});
     kh.addRow({ t: 'Encuestados', v: kpi.totales.encuestados });
     kh.addRow({ t: 'Empleados', v: kpi.totales.empleados });
@@ -214,8 +216,9 @@ export class ReportsService {
         doc.rect(cx, cy, 3, cardH).fill(BRAND);
         doc.fontSize(8).font('Helvetica').fillColor(MUTED)
           .text(k.titulo.toUpperCase(), cx + 12, cy + 8, { width: cardW - 20 });
+        const valorTxt = k.formato === 'indice' ? `${k.valor}/5` : `${Math.round(k.valor * 100)}%`;
         doc.fontSize(15).font('Helvetica-Bold').fillColor(FOREST)
-          .text(`${(k.valor * 100).toFixed(1)}%` + (k.detalle ? `  ·  ${k.detalle}` : ''), cx + 12, cy + 20, { width: cardW - 20 });
+          .text(valorTxt + (k.detalle ? `  ·  ${k.detalle}` : ''), cx + 12, cy + 20, { width: cardW - 20 });
       });
       const rows = Math.ceil(kpi.kpis.length / cols);
       y += rows * (cardH + gap) + 8;
