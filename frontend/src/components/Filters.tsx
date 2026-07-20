@@ -20,38 +20,42 @@ export function Filters({ opciones, filtros, onChange }: Props) {
   const activos = Object.values(filtros).some((v) => Array.isArray(v) && v.length > 0);
 
   return (
-    <div className="card p-4 flex flex-wrap gap-3 items-start">
-      <MultiSelect label="Año egreso" seleccion={val('anioEgreso')}
-        onChange={(v) => set('anioEgreso', v)}
-        opciones={opciones.aniosEgreso.map((a: number): Opcion => ({ value: a, label: String(a) }))} />
+    <div className="card p-4">
+      <div className="grid grid-cols-2 min-[480px]:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-3">
+        <MultiSelect label="Año egreso" seleccion={val('anioEgreso')}
+          onChange={(v) => set('anioEgreso', v)}
+          opciones={opciones.aniosEgreso.map((a: number): Opcion => ({ value: a, label: String(a) }))} />
 
-      <MultiSelect label="Facultad" seleccion={val('facultad')}
-        onChange={(v) => set('facultad', v)}
-        opciones={opciones.facultades.map((f: string): Opcion => ({ value: f, label: f }))} />
+        <MultiSelect label="Facultad" seleccion={val('facultad')}
+          onChange={(v) => set('facultad', v)}
+          opciones={opciones.facultades.map((f: string): Opcion => ({ value: f, label: f }))} />
 
-      <MultiSelect label="Escuela" seleccion={val('escuelaId')}
-        onChange={(v) => set('escuelaId', v)}
-        opciones={opciones.escuelas.map((e: any): Opcion => ({ value: e.id, label: e.nombre }))} />
+        <MultiSelect label="Escuela" seleccion={val('escuelaId')}
+          onChange={(v) => set('escuelaId', v)}
+          opciones={opciones.escuelas.map((e: any): Opcion => ({ value: e.id, label: e.nombre }))} />
 
-      <MultiSelect label="Rubro" seleccion={val('rubroId')}
-        onChange={(v) => set('rubroId', v)}
-        opciones={opciones.rubros.map((r: any): Opcion => ({ value: r.id, label: r.nombre }))} />
+        <MultiSelect label="Rubro" seleccion={val('rubroId')}
+          onChange={(v) => set('rubroId', v)}
+          opciones={opciones.rubros.map((r: any): Opcion => ({ value: r.id, label: r.nombre }))} />
 
-      <MultiSelect label="Nivel cargo" seleccion={val('nivelCargoId')}
-        onChange={(v) => set('nivelCargoId', v)}
-        opciones={opciones.niveles.map((n: any): Opcion => ({ value: n.id, label: n.nombre }))} />
+        <MultiSelect label="Nivel cargo" seleccion={val('nivelCargoId')}
+          onChange={(v) => set('nivelCargoId', v)}
+          opciones={opciones.niveles.map((n: any): Opcion => ({ value: n.id, label: n.nombre }))} />
 
-      <MultiSelect label="Sector" seleccion={val('tipoEmpleo')}
-        onChange={(v) => set('tipoEmpleo', v)}
-        opciones={[{ value: 'PRIVADA', label: 'Privada' }, { value: 'PUBLICA', label: 'Pública' }]} />
+        <MultiSelect label="Sector" seleccion={val('tipoEmpleo')}
+          onChange={(v) => set('tipoEmpleo', v)}
+          opciones={[{ value: 'PRIVADA', label: 'Privada' }, { value: 'PUBLICA', label: 'Pública' }]} />
 
-      <MultiSelect label="Tiempo 1er empleo" seleccion={val('tiempoPrimerEmpleo')}
-        onChange={(v) => set('tiempoPrimerEmpleo', v)}
-        opciones={opciones.tiempos.map((t: string): Opcion => ({ value: t, label: TIEMPO_LABEL[t] }))} />
+        <MultiSelect label="Tiempo 1er empleo" seleccion={val('tiempoPrimerEmpleo')}
+          onChange={(v) => set('tiempoPrimerEmpleo', v)}
+          opciones={opciones.tiempos.map((t: string): Opcion => ({ value: t, label: TIEMPO_LABEL[t] }))} />
+      </div>
 
       {activos && (
-        <button onClick={() => onChange({})}
-          className="text-sm text-brand hover:underline ml-auto self-center">Limpiar filtros</button>
+        <div className="flex justify-end mt-3 pt-3 border-t border-mist">
+          <button onClick={() => onChange({})}
+            className="text-sm text-brand hover:underline">Limpiar filtros</button>
+        </div>
       )}
     </div>
   );
