@@ -60,7 +60,7 @@ export default function LoginPage() {
 
         {showRecovery && (
           <p className="text-xs text-muted bg-forest-light rounded-md px-3 py-2 mb-4 mt-2">
-            Escribe a <span className="font-medium text-forest">soporte.conecta@urp.edu.pe</span> para restablecer tu acceso.
+            Escribe a <span className="font-medium text-forest">ocsee@urp.edu.pe</span> para restablecer tu acceso.
           </p>
         )}
 
