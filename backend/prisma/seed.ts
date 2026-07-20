@@ -81,11 +81,22 @@ async function asegurarUsuarios() {
     { email: 'analista@urp.edu.pe', nombre: 'Analista', rol: Rol.ANALISTA },
     { email: 'consulta@urp.edu.pe', nombre: 'Consulta', rol: Rol.CONSULTA },
   ];
-  for (const u of demo) {
-    await prisma.usuario.upsert({
+    for (const u of demo) {
+      await prisma.usuario.upsert({
       where: { email: u.email },
-      update: {},
-      create: { ...u, passwordHash: pass },
+
+      update: {
+        nombre: u.nombre,
+        rol: u.rol,
+        passwordHash: pass,
+        activo: true,
+      },
+
+      create: {
+        ...u,
+        passwordHash: pass,
+        activo: true,
+      },
     });
   }
 }
