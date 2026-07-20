@@ -3,13 +3,21 @@ import { useEffect, useState } from 'react';
 import { Users, Plus, Trash2 } from 'lucide-react';
 import { api } from '@/lib/api';
 import { Nav } from '@/components/Nav';
+import { useAuth } from '@/lib/auth';
 
 const ROLES = ['ADMIN', 'ANALISTA', 'CONSULTA'];
 
 export default function AdminPage() {
+  const { user: currentUser } = useAuth();
   const [usuarios, setUsuarios] = useState<any[]>([]);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({ nombre: '', email: '', password: '', rol: 'CONSULTA' });
+  const [form, setForm] = useState({
+  nombre: '',
+  email: '',
+  password: '',
+  confirmarPassword: '',
+  rol: 'CONSULTA'
+  });
   const [creando, setCreando] = useState(false);
 
   const cargar = () => api.usuarios().then(setUsuarios).catch((e) => setError(e.message));
@@ -34,10 +42,20 @@ export default function AdminPage() {
     catch (e: any) { setError(e.message); }
   };
   const eliminar = async (id: number) => {
-    if (!confirm('¿Eliminar este usuario?')) return;
-    try { await api.eliminarUsuario(id); cargar(); }
-    catch (e: any) { setError(e.message); }
-  };
+  if (id === currentUser?.id) {
+    setError('No puedes eliminar tu propio usuario');
+    return;
+  }
+
+  if (!confirm('¿Eliminar este usuario?')) return;
+
+  try {
+    await api.eliminarUsuario(id);
+    cargar();
+  } catch (e: any) {
+    setError(e.message);
+  }
+};
 
   return (
     <div className="min-h-screen">
