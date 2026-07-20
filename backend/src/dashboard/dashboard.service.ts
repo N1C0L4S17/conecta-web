@@ -25,7 +25,6 @@ export class DashboardService {
     const [
       total,
       empleados,
-      privadaTipo,
       privadaSector,
       adecuados,
       satAgg,
@@ -36,7 +35,6 @@ export class DashboardService {
     ] = await this.prisma.$transaction([
       this.prisma.respuestaEncuesta.count({ where: base }),
       this.prisma.respuestaEncuesta.count({ where: empleado }),
-      this.prisma.respuestaEncuesta.count({ where: { ...empleado, tipoEmpleo: 'PRIVADA' } }),
       this.prisma.respuestaEncuesta.count({ where: { ...empleado, tipoEmpresa: 'PRIVADA' } }),
       this.prisma.respuestaEncuesta.count({
         where: { ...empleado, correspondencia: { in: ['TOTALMENTE', 'MUCHO'] } },
@@ -63,7 +61,6 @@ export class DashboardService {
       totales: { encuestados: total, empleados },
       kpis: [
         { clave: 'tasaEmpleo', titulo: 'Tasa de empleo', valor: this.pct(empleados, total), formato: 'pct' },
-        { clave: 'tasaTipoEmpleo', titulo: 'Empleo formal (privada)', valor: this.pct(privadaTipo, empleados), formato: 'pct' },
         { clave: 'tasaSectorPrivado', titulo: 'Sector privado', valor: this.pct(privadaSector, empleados), formato: 'pct' },
         { clave: 'tasaAdecuacion', titulo: 'Adecuación profesional', valor: this.pct(adecuados, empleados), formato: 'pct' },
         { clave: 'indiceSatisfaccion', titulo: 'Satisfacción laboral', valor: +(satProm / 5).toFixed(4), formato: 'pct', detalle: `${satProm.toFixed(2)} / 5` },
