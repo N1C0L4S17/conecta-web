@@ -17,10 +17,21 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  // Auth por Bearer token (no cookies) → seguro permitir cualquier origin.
-  const corsOrigin = process.env.CORS_ORIGIN?.trim();
+  // Auth por Bearer token (no cookies) → seguro permitir orígenes explícitos + previews de Vercel
+  const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(o => o.trim()) ?? [];
+
   app.enableCors({
-    origin: !corsOrigin || corsOrigin === '*' ? true : corsOrigin.split(','),
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // requests sin origin (Postman, curl, etc.)
+
+      const isAllowedExplicit = allowedOrigins.includes(origin);
+      const isVercelPreview = /^https:\/\/conecta-[a-z0-9]+-mis-proyectos17\.vercel\.app$/.test(origin);
+
+      if (isAllowedExplicit || isVercelPreview) {
+        return callback(null, true);
+      }
+      callback(new Error(`Origin ${origin} no permitido por CORS`));
+    },
     credentials: false,
   });
 
