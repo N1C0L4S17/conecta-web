@@ -41,10 +41,3 @@ async function bootstrap() {
 }
 bootstrap();
 
-  const corsOrigin = process.env.CORS_ORIGIN?.trim();
-  app.enableCors({
-    origin: !corsOrigin || corsOrigin === '*' ? true : corsOrigin.split(','),
-    credentials: false,
-  });
-}
-bootstrap();
