@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -21,7 +21,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen grid place-items-center bg-forest relative overflow-hidden px-4">
-      {/* Grilla técnica sutil de fondo */}
       <div className="absolute inset-0 opacity-[0.06]"
         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
       <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-brand/20 blur-3xl" />
@@ -40,13 +39,33 @@ export default function LoginPage() {
         <label className="block text-sm text-muted mb-1">Correo electrónico</label>
         <input className="w-full border border-mist rounded-md px-3 py-2 mb-4 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
           value={email} onChange={(e) => setEmail(e.target.value)} />
-        <label className="block text-sm text-muted mb-1">Contraseña</label>
-        <input type="password" className="w-full border border-mist rounded-md px-3 py-2 mb-4 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
-          value={password} onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submit()} />
-        {error && <p className="text-sm text-red-600 mb-3">{error}</p>}
+
+        <div className="flex items-center justify-between mb-1">
+          <label className="block text-sm text-muted">Contraseña</label>
+          <button type="button" onClick={() => setShowRecovery((s) => !s)}
+            className="text-xs text-brand hover:underline">¿Olvidaste tu contraseña?</button>
+        </div>
+        <div className="relative mb-1">
+          <input type={showPassword ? 'text' : 'password'}
+            className="w-full border border-mist rounded-md px-3 py-2 pr-9 mb-0 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submit()} />
+          <button type="button" onClick={() => setShowPassword((s) => !s)}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-forest"
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        </div>
+
+        {showRecovery && (
+          <p className="text-xs text-muted bg-forest-light rounded-md px-3 py-2 mb-4 mt-2">
+            Escribe a <span className="font-medium text-forest">soporte.conecta@urp.edu.pe</span> para restablecer tu acceso.
+          </p>
+        )}
+
+        {error && <p className="text-sm text-red-600 mb-3 mt-3">{error}</p>}
         <button onClick={submit} disabled={loading}
-          className="w-full bg-brand hover:bg-brand-dark text-white rounded-md py-2 text-sm font-medium disabled:opacity-50 transition-colors">
+          className="w-full bg-brand hover:bg-brand-dark text-white rounded-md py-2 text-sm font-medium disabled:opacity-50 transition-colors mt-4">
           {loading ? 'Ingresando…' : 'Iniciar sesión'}
         </button>
         <p className="text-xs text-muted mt-4 text-center font-mono">

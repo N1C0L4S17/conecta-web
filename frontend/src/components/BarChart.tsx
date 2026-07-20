@@ -17,13 +17,13 @@ export function BarChart({ titulo, data }: { titulo: string; data: Item[] }) {
     yAxis: { type: 'category', data: orden.map((d) => d.categoria), axisTick: { show: false } },
     series: [{
       type: 'bar', data: orden.map((d) => d.porcentaje),
-      itemStyle: { color: '#0F6CBD', borderRadius: [0, 4, 4, 0] },
-      label: { show: true, position: 'right', formatter: (p: any) => `${(p.value * 100).toFixed(1)}%`, color: '#616161', fontSize: 11 },
+      itemStyle: { color: '#0B3B2E', borderRadius: [0, 4, 4, 0] },
+      label: { show: true, position: 'right', formatter: (p: any) => `${(p.value * 100).toFixed(1)}%`, color: '#5B6B65', fontSize: 11 },
       barMaxWidth: 22,
     }],
   };
   return (
-    <div className="card p-4">
+    <div className="card card-hover p-4">
       <h3 className="text-sm font-semibold text-ink mb-2">{titulo}</h3>
       <ReactECharts option={option} style={{ height: 320 }} notMerge lazyUpdate />
     </div>

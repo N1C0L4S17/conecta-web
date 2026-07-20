@@ -16,12 +16,13 @@ export function LineChart({ titulo, data }: { titulo: string; data: Punto[] }) {
     yAxis: { type: 'value', axisLabel: { formatter: (v: number) => `${(v * 100).toFixed(0)}%` }, max: 1 },
     series: [{
       type: 'line', smooth: true, data: data.map((d) => d.tasa),
-      itemStyle: { color: '#0F6CBD' }, areaStyle: { color: 'rgba(15,108,189,0.08)' },
-      label: { show: true, formatter: (p: any) => `${(p.value * 100).toFixed(0)}%`, fontSize: 10, color: '#616161' },
+      itemStyle: { color: '#D6006E' }, areaStyle: { color: 'rgba(11,59,46,0.10)' },
+      lineStyle: { color: '#0B3B2E' },
+      label: { show: true, formatter: (p: any) => `${(p.value * 100).toFixed(0)}%`, fontSize: 10, color: '#5B6B65' },
     }],
   };
   return (
-    <div className="card p-4">
+    <div className="card card-hover p-4">
       <h3 className="text-sm font-semibold text-ink mb-2">{titulo}</h3>
       <ReactECharts option={option} style={{ height: 280 }} notMerge lazyUpdate />
     </div>

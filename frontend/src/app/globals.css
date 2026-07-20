@@ -7,11 +7,11 @@ body { background: theme('colors.paper'); color: theme('colors.ink'); font-famil
 
 /* Tarjeta minimalista con línea de señal superior (verde → magenta → verde) */
 .card {
-  @apply relative bg-white rounded-lg border border-mist shadow-sm overflow-hidden;
+  @apply relative bg-white rounded-lg border border-mist shadow-sm;
 }
 .card::before {
   content: '';
-  @apply absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-forest via-brand to-forest opacity-0 transition-opacity duration-300;
+  @apply absolute top-0 left-0 right-0 h-[2px] rounded-t-lg bg-gradient-to-r from-forest via-brand to-forest opacity-0 transition-opacity duration-300 pointer-events-none;
 }
 .card-hover { @apply transition-shadow hover:shadow-md; }
 .card-hover:hover::before { @apply opacity-100; }
