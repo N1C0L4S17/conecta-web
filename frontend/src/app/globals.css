@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root { --radius: 8px; }
+html, body { max-width: 100%; overflow-x: hidden; }
 body { background: theme('colors.paper'); color: theme('colors.ink'); font-family: theme('fontFamily.sans'); }
 
 /* Tarjeta minimalista con línea de señal superior (verde → magenta → verde) */
