@@ -4,12 +4,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: { DEFAULT: '#D6006E', dark: '#A30057', light: '#FBE6F1' },
-        forest: { DEFAULT: '#0B3B2E', dark: '#082A21', light: '#E6EEEA' },
-        ink: '#16211D',
-        muted: '#5B6B65',
-        mist: '#E3E9E6',
-        paper: '#F6F8F7',
+        // Paleta "Forest Bloom" (Stitch) — verde bosque profundo + magenta vibrante.
+        brand: { DEFAULT: '#B50062', dark: '#E2007C', light: '#FFD9E2' },
+        forest: { DEFAULT: '#00361E', dark: '#002110', light: '#E8F3EC' },
+        ink: '#0B1C30',
+        muted: '#414942',
+        mist: '#C0C9C0',
+        paper: '#F8F9FF',
+        outline: '#717972',
+        error: '#BA1A1A',
+        surface: {
+          DEFAULT: '#F8F9FF',
+          dim: '#CBDBF5',
+          lowest: '#FFFFFF',
+          low: '#EFF4FF',
+          container: '#E5EEFF',
+          high: '#DCE9FF',
+          highest: '#D3E4FE',
+        },
+      },
+      borderRadius: {
+        xl: '1rem',
+        '2xl': '1.5rem',
+      },
+      boxShadow: {
+        glass: '0 10px 30px rgba(0,0,0,0.04)',
+        floating: '0 20px 40px rgba(0,0,0,0.08)',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

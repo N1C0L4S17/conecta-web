@@ -6,13 +6,32 @@
 html, body { max-width: 100%; overflow-x: hidden; }
 body { background: theme('colors.paper'); color: theme('colors.ink'); font-family: theme('fontFamily.sans'); }
 
-/* Tarjeta minimalista con línea de señal superior (verde → magenta → verde) */
+/* Tarjeta "glass" — superficie blanca elevada con sombra suave, estilo Forest Bloom */
 .card {
-  @apply relative bg-white rounded-lg border border-mist shadow-sm;
+  @apply relative bg-white rounded-2xl border border-forest/5 shadow-glass;
 }
-.card::before {
-  content: '';
-  @apply absolute top-0 left-0 right-0 h-[2px] rounded-t-lg bg-gradient-to-r from-forest via-brand to-forest opacity-0 transition-opacity duration-300 pointer-events-none;
+.card-hover { @apply transition-shadow hover:shadow-floating; }
+
+/* Cabecera / sidebar con efecto vidrio esmerilado */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
-.card-hover { @apply transition-shadow hover:shadow-md; }
-.card-hover:hover::before { @apply opacity-100; }
+
+/* Fondo tipo "mesh" verde bosque, para la pantalla de login */
+.bg-mesh {
+  background-color: #00361e;
+  background-image:
+    radial-gradient(at 0% 0%, #1a4d32 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #002110 0px, transparent 50%),
+    radial-gradient(at 100% 100%, #1d5035 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #00361e 0px, transparent 50%);
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
