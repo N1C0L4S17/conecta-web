@@ -16,9 +16,9 @@ export function LineChart({ titulo, data }: { titulo: string; data: Punto[] }) {
     yAxis: { type: 'value', axisLabel: { formatter: (v: number) => `${(v * 100).toFixed(0)}%` }, max: 1 },
     series: [{
       type: 'line', smooth: true, data: data.map((d) => d.tasa),
-      itemStyle: { color: '#D6006E' }, areaStyle: { color: 'rgba(11,59,46,0.10)' },
-      lineStyle: { color: '#0B3B2E' },
-      label: { show: true, formatter: (p: any) => `${(p.value * 100).toFixed(0)}%`, fontSize: 10, color: '#5B6B65' },
+      itemStyle: { color: '#B50062' }, areaStyle: { color: 'rgba(0,54,30,0.10)' },
+      lineStyle: { color: '#00361E' },
+      label: { show: true, formatter: (p: any) => `${(p.value * 100).toFixed(0)}%`, fontSize: 10, color: '#414942' },
     }],
   };
   return (

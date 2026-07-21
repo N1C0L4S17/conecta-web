@@ -17,8 +17,8 @@ export function BarChart({ titulo, data }: { titulo: string; data: Item[] }) {
     yAxis: { type: 'category', data: orden.map((d) => d.categoria), axisTick: { show: false } },
     series: [{
       type: 'bar', data: orden.map((d) => d.porcentaje),
-      itemStyle: { color: '#0B3B2E', borderRadius: [0, 4, 4, 0] },
-      label: { show: true, position: 'right', formatter: (p: any) => `${(p.value * 100).toFixed(1)}%`, color: '#5B6B65', fontSize: 11 },
+      itemStyle: { color: '#00361E', borderRadius: [0, 4, 4, 0] },
+      label: { show: true, position: 'right', formatter: (p: any) => `${(p.value * 100).toFixed(1)}%`, color: '#414942', fontSize: 11 },
       barMaxWidth: 22,
     }],
   };
