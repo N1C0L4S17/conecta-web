@@ -122,7 +122,6 @@ export function KpiCard({
       <div
         className="relative w-full h-full duration-500"
         style={{
-          transformStyle: 'preserve-3d',
           transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
