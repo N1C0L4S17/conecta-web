@@ -120,18 +120,14 @@ export function KpiCard({
       aria-label={`${titulo}: ${texto}`}
     >
       <div
-        className="relative w-full h-full duration-500"
+        className="relative w-full h-full duration-500 flip-container"
         style={{
-          transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
         {/* Cara frontal */}
         <div
-          className={`absolute top-0 left-0 w-full h-full card card-hover border-l-[5px] ${borde}`}
-          style={{
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-          }}
+          className={`absolute top-0 left-0 w-full h-full card card-hover border-l-[5px] flip-front ${borde}`}
         >
 
         <div className="flex flex-col justify-between h-full p-5">
@@ -166,13 +162,8 @@ export function KpiCard({
 
         {/* Cara trasera */}
         <div
-        className={`absolute top-0 left-0 w-full h-full card border-l-[5px] ${borde}`}
-        style={{
-          transform: 'rotateY(180deg)',
-          backfaceVisibility: 'hidden',
-          WebkitBackfaceVisibility: 'hidden',
-        }}
-      >
+        className={`absolute top-0 left-0 w-full h-full card border-l-[5px] flip-back ${borde}`}
+        >
 
         <div className="flex flex-col justify-center items-center h-full p-5 text-center">
 

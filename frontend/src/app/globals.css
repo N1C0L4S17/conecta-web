@@ -36,4 +36,17 @@ body { background: theme('colors.paper'); color: theme('colors.ink'); font-famil
   100% { transform: translateY(0px); }
 }
 
+.flip-container {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
 
+.flip-front,
+.flip-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
