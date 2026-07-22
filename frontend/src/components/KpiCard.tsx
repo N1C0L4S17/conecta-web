@@ -116,22 +116,29 @@ export function KpiCard({
     <button
       type="button"
       onClick={() => setVolteada((v) => !v)}
-      className="appearance-none bg-transparent p-0 border-0 text-left w-full h-[180px] overflow-hidden [perspective:1000px] cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/40"
-      aria-label={`${titulo}: ${texto}. Presiona para ver más detalle.`}
+      className="w-full h-[180px] cursor-pointer rounded-2xl overflow-hidden [perspective:1200px] focus:outline-none"
+      aria-label={`${titulo}: ${texto}`}
     >
       <div
-        className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]"
+        className="relative w-full h-full duration-500"
         style={{
+          transformStyle: 'preserve-3d',
           transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
-          transformOrigin: 'center center',
         }}
       >
         {/* Cara frontal */}
         <div
-          className={`card card-hover absolute inset-0 top-0 left-0 h-full p-5 flex flex-col justify-between [backface-visibility:hidden] ${borde}`}
+          className={`absolute top-0 left-0 w-full h-full card card-hover border-l-[5px] ${borde}`}
+          style={{
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
         >
+
+        <div className="flex flex-col justify-between h-full p-5">
+
           <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${
+            className={`w-9 h-9 rounded-xl flex items-center justify-center ${
               esBrand
                 ? 'bg-brand/10 text-brand'
                 : 'bg-forest/10 text-forest'
@@ -145,34 +152,43 @@ export function KpiCard({
               {titulo}
             </span>
 
-            <div className="font-display text-3xl font-bold text-forest leading-tight tabular-nums mt-0.5">
+            <div className="font-display text-3xl font-bold text-forest leading-tight mt-1">
               {texto}
             </div>
 
             {detalle && (
-              <div className="text-xs text-muted mt-0.5">
+              <div className="text-xs text-muted mt-1">
                 {detalle}
               </div>
             )}
           </div>
         </div>
+        </div>
 
         {/* Cara trasera */}
         <div
-          className={`card absolute inset-0 top-0 left-0 h-full p-5 flex flex-col justify-center items-center text-center [backface-visibility:hidden] ${borde}`}
-          style={{
-            transform: 'rotateY(180deg)',
-            transformOrigin: 'center center',
-          }}
-        >
-        <h3 className="text-lg font-bold text-forest mb-3">
-        {info?.titulo ?? titulo}
-        </h3>
+        className={`absolute top-0 left-0 w-full h-full card border-l-[5px] ${borde}`}
+        style={{
+          transform: 'rotateY(180deg)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+        }}
+      >
 
-        <p className="text-sm text-muted leading-relaxed">
-        {info?.descripcion}
-        </p>
+        <div className="flex flex-col justify-center items-center h-full p-5 text-center">
+
+          <h3 className="text-lg font-bold text-forest mb-3">
+            {info?.titulo ?? titulo}
+          </h3>
+
+          <p className="text-sm text-muted leading-relaxed">
+            {info?.descripcion ??
+              'No hay información disponible para este indicador.'}
+          </p>
+
         </div>
+
+      </div>
       </div>
     </button>
   );
