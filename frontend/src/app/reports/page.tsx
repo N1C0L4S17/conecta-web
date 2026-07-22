@@ -29,8 +29,8 @@ export default function ReportsPage() {
   return (
     <div className="min-h-screen">
       <Nav />
-      <main className="md:pl-[76px]">
-        <div className="max-w-7xl mx-auto px-6 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-6 py-6 space-y-6">
+        <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-brand/10 text-brand rounded-xl flex items-center justify-center shrink-0">
             <FileDown size={20} />
           </div>
