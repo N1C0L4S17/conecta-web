@@ -77,19 +77,19 @@ export default function AdminPage() {
         <div className="card p-4 flex flex-wrap gap-3 items-end">
           <input placeholder="Nombre" value={form.nombre}
             onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-            className="border rounded-md px-3 py-2 text-sm" />
+            className="border border-mist rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-forest/20 focus:border-forest outline-none transition-all" />
           <input placeholder="Correo" value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="border rounded-md px-3 py-2 text-sm" />
+            className="border border-mist rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-forest/20 focus:border-forest outline-none transition-all" />
           <input placeholder="Contraseña" type="password" value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="border rounded-md px-3 py-2 text-sm" />
+            className="border border-mist rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-forest/20 focus:border-forest outline-none transition-all" />
           <select value={form.rol} onChange={(e) => setForm({ ...form, rol: e.target.value })}
-            className="border rounded-md px-3 py-2 text-sm bg-white">
+            className="border border-mist rounded-xl px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-forest/20 focus:border-forest outline-none transition-all">
             {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
           </select>
           <button onClick={crear} disabled={creando}
-            className="flex items-center gap-1 bg-brand hover:bg-brand-dark text-white rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50">
+            className="flex items-center gap-1 bg-brand hover:bg-brand-dark text-white rounded-xl px-4 py-2.5 text-sm font-semibold shadow-lg shadow-brand/20 disabled:opacity-50 transition-all">
             <Plus size={15} /> Crear
           </button>
         </div>
@@ -97,32 +97,32 @@ export default function AdminPage() {
         {/* Tabla */}
         <div className="card overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-neutral-50 text-muted">
+            <thead className="bg-forest/5 text-muted">
               <tr>
-                <th className="text-left px-4 py-2 font-medium">Nombre</th>
-                <th className="text-left px-4 py-2 font-medium">Correo</th>
-                <th className="text-left px-4 py-2 font-medium">Rol</th>
-                <th className="text-left px-4 py-2 font-medium">Activo</th>
-                <th className="px-4 py-2"></th>
+                <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">Nombre</th>
+                <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">Correo</th>
+                <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">Rol</th>
+                <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">Activo</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody>
               {usuarios.map((u) => (
-                <tr key={u.id} className="border-t">
-                  <td className="px-4 py-2">{u.nombre}</td>
-                  <td className="px-4 py-2 text-muted">{u.email}</td>
-                  <td className="px-4 py-2">
+                <tr key={u.id} className="border-t border-forest/10 hover:bg-forest/[0.03] transition-colors">
+                  <td className="px-4 py-3 font-medium text-ink">{u.nombre}</td>
+                  <td className="px-4 py-3 text-muted">{u.email}</td>
+                  <td className="px-4 py-3">
                     <select value={u.rol} onChange={(e) => cambiarRol(u.id, e.target.value)}
-                      className="border rounded-md px-2 py-1 text-sm bg-white">
+                      className="border border-mist rounded-lg px-2 py-1 text-sm bg-white focus:ring-2 focus:ring-forest/20 outline-none">
                       {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
                     </select>
                   </td>
-                  <td className="px-4 py-2">
-                    <input type="checkbox" checked={u.activo}
+                  <td className="px-4 py-3">
+                    <input type="checkbox" checked={u.activo} className="accent-forest w-4 h-4"
                       onChange={(e) => toggleActivo(u.id, e.target.checked)} />
                   </td>
-                  <td className="px-4 py-2 text-right">
-                    <button onClick={() => eliminar(u.id)} className="text-red-500 hover:text-red-700">
+                  <td className="px-4 py-3 text-right">
+                    <button onClick={() => eliminar(u.id)} className="text-error/70 hover:text-error transition-colors">
                       <Trash2 size={16} />
                     </button>
                   </td>

@@ -45,23 +45,29 @@ export default function ImportPage() {
         </div>
 
         <div className="card p-6 space-y-4">
-          <input type="file" accept=".xlsx,.xls"
-            onChange={(e) => { setFile(e.target.files?.[0] ?? null); setPreview(null); setResultado(null); }}
-            className="block w-full text-sm" />
+          <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-mist rounded-2xl py-8 px-4 text-center hover:border-forest/40 hover:bg-forest/[0.02] transition-colors cursor-pointer">
+            <Upload size={22} className="text-forest/60" />
+            <span className="text-sm text-muted">
+              {file ? <b className="text-ink">{file.name}</b> : 'Haz clic para seleccionar un archivo .xlsx'}
+            </span>
+            <input type="file" accept=".xlsx,.xls"
+              onChange={(e) => { setFile(e.target.files?.[0] ?? null); setPreview(null); setResultado(null); }}
+              className="hidden" />
+          </label>
           <div className="flex gap-3">
             <button onClick={validar} disabled={!file || !!loading}
-              className="border border-brand text-brand rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50">
+              className="border border-brand text-brand rounded-xl px-4 py-2.5 text-sm font-semibold disabled:opacity-50 hover:bg-brand/5 transition-colors">
               {loading === 'validar' ? 'Validando…' : '1. Validar'}
             </button>
             <button onClick={cargar} disabled={!preview || !!loading}
-              className="bg-brand hover:bg-brand-dark text-white rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50">
+              className="bg-brand hover:bg-brand-dark text-white rounded-xl px-4 py-2.5 text-sm font-semibold shadow-lg shadow-brand/20 disabled:opacity-50 transition-all">
               {loading === 'cargar' ? 'Cargando…' : '2. Confirmar carga'}
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="card p-4 flex items-start gap-2 text-red-700 bg-red-50 border-red-200">
+          <div className="card p-4 rounded-2xl flex items-start gap-2 text-error bg-error/5 border-error/20">
             <AlertTriangle size={18} className="mt-0.5" /> <span className="text-sm">{error}</span>
           </div>
         )}
@@ -75,7 +81,7 @@ export default function ImportPage() {
               <li>Dimensiones → escuelas {preview.dimensiones.escuelas}, rubros {preview.dimensiones.rubros}, niveles {preview.dimensiones.niveles}</li>
             </ul>
             {preview.advertencias?.length > 0 && (
-              <div className="text-xs text-amber-700 bg-amber-50 rounded-md p-2">
+              <div className="text-xs text-amber-700 bg-amber-50 rounded-xl p-2">
                 {preview.advertencias.map((a: string, i: number) => <div key={i}>⚠ {a}</div>)}
               </div>
             )}
@@ -83,7 +89,7 @@ export default function ImportPage() {
         )}
 
         {resultado && (
-          <div className="card p-4 flex items-start gap-2 text-green-700 bg-green-50 border-green-200">
+          <div className="card p-4 rounded-2xl flex items-start gap-2 text-forest bg-forest/5 border-forest/20">
             <CheckCircle2 size={18} className="mt-0.5" />
             <span className="text-sm">
               Carga completada: <b>{resultado.insertadas}</b> respuestas en la campaña {resultado.campaniaAnio}.

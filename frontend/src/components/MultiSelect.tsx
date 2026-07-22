@@ -34,7 +34,7 @@ export function MultiSelect({ label, opciones, seleccion, onChange }: Props) {
       <label className="text-[11px] font-medium text-muted uppercase truncate">{label}</label>
       <div className="relative min-w-0">
         <button type="button" onClick={() => setOpen((o) => !o)}
-          className="border border-mist rounded-md px-2 py-1.5 text-sm bg-white w-full flex items-center justify-between gap-2">
+          className="border border-mist rounded-xl px-3 py-2 text-sm bg-white w-full flex items-center justify-between gap-2 focus:ring-2 focus:ring-forest/20 focus:border-forest outline-none transition-all">
           <span className="truncate text-left">
             {seleccion.length === 0 ? <span className="text-neutral-400">Todos</span>
               : `${seleccion.length} seleccionado${seleccion.length > 1 ? 's' : ''}`}
@@ -43,11 +43,11 @@ export function MultiSelect({ label, opciones, seleccion, onChange }: Props) {
         </button>
 
         {open && (
-          <div className="absolute z-20 mt-1 left-0 w-[min(16rem,85vw)] max-h-64 overflow-auto bg-white border border-mist rounded-md shadow-lg py-1">
+          <div className="absolute z-20 mt-1 left-0 w-[min(16rem,85vw)] max-h-64 overflow-auto bg-white border border-mist rounded-xl shadow-floating py-1">
             {opciones.map((o) => (
               <label key={String(o.value)}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-neutral-50 cursor-pointer">
-                <input type="checkbox" checked={seleccion.includes(o.value)} onChange={() => toggle(o.value)} />
+                className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-forest/5 cursor-pointer">
+                <input type="checkbox" checked={seleccion.includes(o.value)} onChange={() => toggle(o.value)} className="accent-forest" />
                 <span className="truncate">{o.label}</span>
               </label>
             ))}
@@ -59,7 +59,7 @@ export function MultiSelect({ label, opciones, seleccion, onChange }: Props) {
         <div className="flex flex-wrap gap-1">
           {seleccion.map((v) => (
             <span key={String(v)}
-              className="inline-flex items-center gap-1 bg-brand-light text-brand text-[11px] rounded px-1.5 py-0.5 max-w-full">
+              className="inline-flex items-center gap-1 bg-brand-light text-brand text-[11px] rounded-lg px-2 py-0.5 max-w-full">
               <span className="truncate">{labelDe(v)}</span>
               <button onClick={() => toggle(v)} className="shrink-0"><X size={11} /></button>
             </span>
