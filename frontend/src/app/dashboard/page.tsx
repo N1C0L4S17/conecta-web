@@ -8,6 +8,7 @@ import { KpiCard } from '@/components/KpiCard';
 import { BarChart } from '@/components/BarChart';
 import { LineChart } from '@/components/LineChart';
 import { Filters } from '@/components/Filters';
+import { LayoutDashboard } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -47,14 +48,24 @@ export default function DashboardPage() {
 
       <main className="md:pl-[280px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        <Filters opciones={opciones} filtros={filtros} onChange={setFiltros} />
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-forest/10 text-forest rounded-xl flex items-center justify-center shrink-0">
+              <LayoutDashboard size={20} />
+            </div>
+            <div>
+              <h1 className="text-xl font-display font-bold text-ink">Dashboard</h1>
+              {kpis && (
+                <p className="text-sm text-muted">
+                  <b className="text-ink">{kpis.totales.encuestados.toLocaleString()}</b> encuestados ·{' '}
+                  <b className="text-ink">{kpis.totales.empleados.toLocaleString()}</b> empleados
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
 
-        {kpis && (
-          <p className="text-sm text-muted">
-            <b className="text-ink">{kpis.totales.encuestados.toLocaleString()}</b> encuestados ·{' '}
-            <b className="text-ink">{kpis.totales.empleados.toLocaleString()}</b> empleados
-          </p>
-        )}
+        <Filters opciones={opciones} filtros={filtros} onChange={setFiltros} />
 
         <section className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {kpis?.kpis.map((k: any) => (
