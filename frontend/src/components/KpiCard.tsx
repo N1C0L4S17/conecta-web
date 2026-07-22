@@ -116,18 +116,18 @@ export function KpiCard({
     <button
       type="button"
       onClick={() => setVolteada((v) => !v)}
-      className="appearance-none bg-transparent p-0 border-0 text-left w-full min-h-[124px] [perspective:1000px] cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/40"
+      className="appearance-none bg-transparent p-0 border-0 text-left w-full h-[180px] [perspective:1000px] cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/40"
       aria-label={`${titulo}: ${texto}. Presiona para ver más detalle.`}
     >
       <div
-        className="relative w-full h-full min-h-[124px] transition-transform duration-500 [transform-style:preserve-3d]"
+        className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]"
         style={{
           transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
         {/* Cara frontal */}
         <div
-          className={`card card-hover absolute inset-0 p-5 border-l-[5px] flex flex-col justify-between [backface-visibility:hidden] ${borde}`}
+          className={`card card-hover absolute inset-0 h-full p-5 border-l-[5px] flex flex-col justify-between [backface-visibility:hidden] ${borde}`}
         >
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${
@@ -158,7 +158,7 @@ export function KpiCard({
 
         {/* Cara trasera */}
         <div
-          className={`card absolute inset-0 p-5 border-l-[5px] flex flex-col justify-center items-center text-center [backface-visibility:hidden] ${borde}`}
+          className={`card absolute inset-0 h-full p-5 flex flex-col justify-center items-center text-center overflow-auto [backface-visibility:hidden] ${borde}`}
           style={{ transform: 'rotateY(180deg)' }}
         >
           <h3 className="text-lg font-bold text-forest mb-3">
