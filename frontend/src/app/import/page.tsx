@@ -32,7 +32,8 @@ export default function ImportPage() {
   return (
     <div className="min-h-screen">
       <Nav />
-      <main className="max-w-3xl mx-auto px-6 py-6 space-y-6">
+      <main className="md:pl-[280px]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         <div>
           <h1 className="text-xl font-semibold text-ink flex items-center gap-2">
             <Upload size={20} className="text-brand" /> Importar Excel
@@ -89,6 +90,7 @@ export default function ImportPage() {
             </span>
           </div>
         )}
+      </div>
       </main>
     </div>
   );

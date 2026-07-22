@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { BarChart3, Eye, EyeOff } from 'lucide-react';
+import { BarChart3, Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -21,58 +21,97 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center bg-forest relative overflow-hidden px-4">
-      <div className="absolute inset-0 opacity-[0.06]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-      <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-brand/20 blur-3xl" />
+    <div className="bg-mesh min-h-screen flex items-center justify-center p-4 overflow-hidden relative">
+      {/* Elementos atmosféricos de fondo */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-forest/20 blur-[120px] rounded-full animate-float" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand/10 blur-[120px] rounded-full animate-float" style={{ animationDelay: '2s' }} />
 
-      <div className="relative w-full max-w-sm bg-paper rounded-xl border border-forest-dark/40 shadow-2xl p-8">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
-          </span>
-          <BarChart3 size={22} className="text-forest" />
-          <h1 className="font-display text-lg font-semibold text-ink">CONECTA URP</h1>
-        </div>
-        <p className="text-xs text-muted font-mono uppercase tracking-wider mb-6">Analítica de Egresados</p>
+      <main className="relative z-10 w-full max-w-[440px]">
+        <div className="bg-white/90 backdrop-blur-xl border border-forest/10 rounded-2xl shadow-floating p-8 sm:p-10 flex flex-col items-center">
+          {/* Identidad de marca */}
+          <div className="mb-6 text-center">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-12 h-12 bg-forest rounded-xl flex items-center justify-center shadow-lg rotate-3 hover:rotate-0 transition-transform duration-300">
+                <BarChart3 size={26} className="text-white" />
+              </div>
+            </div>
+            <h1 className="font-display text-2xl font-bold text-forest tracking-tight">CONECTA URP</h1>
+            <p className="text-xs text-muted mt-1 font-medium uppercase tracking-wider">Analítica de Egresados</p>
+          </div>
 
-        <label className="block text-sm text-muted mb-1">Correo electrónico</label>
-        <input className="w-full border border-mist rounded-md px-3 py-2 mb-4 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
-          value={email} onChange={(e) => setEmail(e.target.value)} />
+          <div className="w-full mb-6 text-center">
+            <h2 className="text-xl font-semibold text-ink">Bienvenido de nuevo</h2>
+            <p className="text-sm text-muted mt-0.5">Ingresa para ver el panel de egresados</p>
+          </div>
 
-        <div className="flex items-center justify-between mb-1">
-          <label className="block text-sm text-muted">Contraseña</label>
-          <button type="button" onClick={() => setShowRecovery((s) => !s)}
-            className="text-xs text-brand hover:underline">¿Olvidaste tu contraseña?</button>
-        </div>
-        <div className="relative mb-1">
-          <input type={showPassword ? 'text' : 'password'}
-            className="w-full border border-mist rounded-md px-3 py-2 pr-9 mb-0 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
-            value={password} onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && submit()} />
-          <button type="button" onClick={() => setShowPassword((s) => !s)}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-forest"
-            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
-            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-          </button>
-        </div>
+          <div className="w-full space-y-4">
+            {/* Correo */}
+            <div className="space-y-1">
+              <label htmlFor="email" className="text-xs font-semibold text-muted ml-1 uppercase tracking-wide">
+                Correo electrónico
+              </label>
+              <div className="relative group">
+                <Mail size={18} className="absolute inset-y-0 left-4 my-auto text-outline group-focus-within:text-forest transition-colors" />
+                <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nombre@urp.edu.pe"
+                  className="w-full bg-surface-low border border-mist/60 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-ink placeholder:text-outline/60 focus:ring-2 focus:ring-forest/20 focus:border-forest transition-all outline-none" />
+              </div>
+            </div>
 
-        {showRecovery && (
-          <p className="text-xs text-muted bg-forest-light rounded-md px-3 py-2 mb-4 mt-2">
-            Escribe a <span className="font-medium text-forest">ocsee@urp.edu.pe</span> para restablecer tu acceso.
+            {/* Contraseña */}
+            <div className="space-y-1">
+              <div className="flex justify-between items-center ml-1">
+                <label htmlFor="password" className="text-xs font-semibold text-muted uppercase tracking-wide">Contraseña</label>
+                <button type="button" onClick={() => setShowRecovery((s) => !s)}
+                  className="text-xs font-semibold text-brand hover:underline">¿Olvidaste tu contraseña?</button>
+              </div>
+              <div className="relative group">
+                <Lock size={18} className="absolute inset-y-0 left-4 my-auto text-outline group-focus-within:text-forest transition-colors" />
+                <input id="password" type={showPassword ? 'text' : 'password'} value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && submit()}
+                  placeholder="••••••••"
+                  className="w-full bg-surface-low border border-mist/60 rounded-2xl py-3.5 pl-12 pr-11 text-sm text-ink placeholder:text-outline/60 focus:ring-2 focus:ring-forest/20 focus:border-forest transition-all outline-none" />
+                <button type="button" onClick={() => setShowPassword((s) => !s)}
+                  className="absolute inset-y-0 right-4 my-auto text-outline hover:text-forest transition-colors"
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}>
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {showRecovery && (
+              <p className="text-xs text-forest bg-forest-light rounded-xl px-4 py-3 leading-relaxed">
+                Escribe a <span className="font-semibold">ocsee@urp.edu.pe</span> para restablecer tu acceso.
+              </p>
+            )}
+
+            {error && (
+              <p className="text-sm text-error bg-error/5 border border-error/20 rounded-xl px-4 py-2.5">{error}</p>
+            )}
+
+            <button onClick={submit} disabled={loading}
+              className="w-full bg-brand hover:bg-brand-dark active:scale-[0.98] text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-brand/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:active:scale-100">
+              {loading ? (
+                <><Loader2 size={18} className="animate-spin" /> Ingresando…</>
+              ) : (
+                <>Iniciar sesión <ArrowRight size={18} /></>
+              )}
+            </button>
+          </div>
+
+          <p className="text-xs text-muted mt-8 text-center">
+            Acceso exclusivo para usuarios registrados.
           </p>
-        )}
+        </div>
 
-        {error && <p className="text-sm text-red-600 mb-3 mt-3">{error}</p>}
-        <button onClick={submit} disabled={loading}
-          className="w-full bg-brand hover:bg-brand-dark text-white rounded-md py-2 text-sm font-medium disabled:opacity-50 transition-colors mt-4">
-          {loading ? 'Ingresando…' : 'Iniciar sesión'}
-        </button>
-        <p className="text-xs text-muted mt-4 text-center font-mono">
-          Acceso exclusivo para usuarios registrados.
-        </p>
-      </div>
+        {/* Elementos decorativos */}
+        <div className="mt-8 flex justify-center gap-3 opacity-60">
+          <div className="w-12 h-1 bg-white/30 rounded-full" />
+          <div className="w-24 h-1 bg-brand/40 rounded-full" />
+          <div className="w-12 h-1 bg-white/30 rounded-full" />
+        </div>
+      </main>
     </div>
   );
 }

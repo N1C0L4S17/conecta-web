@@ -45,7 +45,8 @@ export default function DashboardPage() {
     <div className="min-h-screen">
       <Nav />
 
-      <main className="max-w-7xl mx-auto px-6 py-6 space-y-6">
+      <main className="md:pl-[280px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         <Filters opciones={opciones} filtros={filtros} onChange={setFiltros} />
 
         {kpis && (
@@ -67,6 +68,7 @@ export default function DashboardPage() {
           <BarChart titulo="% Distribución por Rubro" data={rubro} />
           <BarChart titulo="% Distribución por Cargo" data={cargo} />
         </section>
+      </div>
       </main>
     </div>
   );

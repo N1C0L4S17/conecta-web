@@ -12,6 +12,20 @@ const LINKS = [
   { href: '/admin', label: 'Usuarios', icon: Users, roles: ['ADMIN'] },
 ];
 
+function Brand() {
+  return (
+    <div className="flex items-center gap-2.5 text-forest">
+      <div className="w-9 h-9 bg-forest rounded-xl flex items-center justify-center shrink-0">
+        <BarChart3 size={18} className="text-white" />
+      </div>
+      <div className="min-w-0">
+        <p className="font-display font-bold text-sm leading-tight truncate">CONECTA URP</p>
+        <p className="text-[10px] text-outline uppercase tracking-widest truncate">Analítica de Egresados</p>
+      </div>
+    </div>
+  );
+}
+
 export function Nav() {
   const { user, logout } = useAuth();
   const pathname = usePathname();
@@ -31,71 +45,76 @@ export function Nav() {
   const links = LINKS.filter((l) => l.roles.includes(rol));
 
   return (
-    <header className="bg-forest sticky top-0 z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-white min-w-0">
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
-          </span>
-          <BarChart3 size={20} className="shrink-0" />
-          <span className="font-display font-semibold tracking-tight truncate">CONECTA URP</span>
-        </div>
+    <>
+      {/* Sidebar — escritorio (md+) */}
+      <aside className="hidden md:flex md:flex-col md:fixed md:inset-y-0 md:left-0 md:w-[280px] md:z-30
+        bg-white/85 glass-nav border-r border-forest/10 shadow-[10px_0_30px_-15px_rgba(0,0,0,0.06)] px-3 py-5">
+        <div className="px-2 mb-6"><Brand /></div>
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="flex-1 space-y-1 px-1">
           {links.map((l) => {
             const active = pathname === l.href;
             const Icon = l.icon;
             return (
               <Link key={l.href} href={l.href}
-                className={`relative flex items-center gap-1.5 px-3 py-1.5 text-sm transition-colors whitespace-nowrap ${
-                  active ? 'text-white font-medium' : 'text-forest-light/70 hover:text-white'
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all border-l-4 ${
+                  active
+                    ? 'text-forest font-semibold border-forest bg-forest/5'
+                    : 'text-muted border-transparent hover:text-forest hover:bg-forest/5'
                 }`}>
-                <Icon size={15} /> {l.label}
-                {active && <span className="absolute left-3 right-3 -bottom-[1px] h-[2px] bg-brand rounded-full" />}
+                <Icon size={17} /> {l.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4 text-sm shrink-0">
-          <span className="text-forest-light/70">{user?.nombre} · {rol}</span>
-          <button onClick={logout} className="flex items-center gap-1 text-forest-light/70 hover:text-brand transition-colors">
+        <div className="px-2 pt-3 mt-3 border-t border-forest/10">
+          <p className="text-xs font-medium text-ink truncate">{user?.nombre}</p>
+          <p className="text-[11px] text-outline uppercase tracking-wide mb-2">{rol}</p>
+          <button onClick={logout}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-muted hover:text-brand hover:bg-brand/5 transition-colors">
             <LogOut size={16} /> Salir
           </button>
         </div>
+      </aside>
 
-        <button type="button" onClick={() => setOpen((o) => !o)}
-          className="md:hidden text-white p-1.5 -mr-1.5 shrink-0" aria-label="Abrir menú">
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden border-t border-white/10 bg-forest-dark">
-          <nav className="max-w-7xl mx-auto px-4 py-2 flex flex-col">
-            {links.map((l) => {
-              const active = pathname === l.href;
-              const Icon = l.icon;
-              return (
-                <Link key={l.href} href={l.href}
-                  className={`flex items-center gap-2 px-2 py-2.5 text-sm rounded-md transition-colors ${
-                    active ? 'text-white font-medium bg-white/10' : 'text-forest-light/70 hover:text-white'
-                  }`}>
-                  <Icon size={16} /> {l.label}
-                </Link>
-              );
-            })}
-            <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between px-2">
-              <span className="text-xs text-forest-light/70 truncate">{user?.nombre} · {rol}</span>
-              <button onClick={logout}
-                className="flex items-center gap-1 text-sm text-forest-light/70 hover:text-brand transition-colors shrink-0">
-                <LogOut size={16} /> Salir
-              </button>
-            </div>
-          </nav>
+      {/* Barra superior — móvil (<md) */}
+      <header className="md:hidden sticky top-0 z-30 glass-nav border-b border-forest/10">
+        <div className="px-4 h-14 flex items-center justify-between gap-2">
+          <Brand />
+          <button type="button" onClick={() => setOpen((o) => !o)}
+            className="text-forest p-1.5 -mr-1.5 shrink-0" aria-label="Abrir menú">
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
-      )}
-    </header>
+
+        {open && (
+          <div className="border-t border-forest/10 bg-white">
+            <nav className="px-3 py-2 flex flex-col">
+              {links.map((l) => {
+                const active = pathname === l.href;
+                const Icon = l.icon;
+                return (
+                  <Link key={l.href} href={l.href}
+                    className={`flex items-center gap-2 px-3 py-2.5 text-sm rounded-xl transition-colors ${
+                      active ? 'text-forest font-semibold bg-forest/5' : 'text-muted hover:text-forest hover:bg-forest/5'
+                    }`}>
+                    <Icon size={16} /> {l.label}
+                  </Link>
+                );
+              })}
+              <div className="mt-2 pt-2 border-t border-forest/10 flex items-center justify-between px-3">
+                <span className="text-xs text-outline truncate">{user?.nombre} · {rol}</span>
+                <button onClick={logout}
+                  className="flex items-center gap-1 text-sm text-muted hover:text-brand transition-colors shrink-0">
+                  <LogOut size={16} /> Salir
+                </button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+    </>
   );
 }
+
