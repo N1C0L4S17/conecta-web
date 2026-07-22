@@ -32,7 +32,7 @@ export default function ImportPage() {
   return (
     <div className="min-h-screen">
       <Nav />
-      <main className="md:pl-[280px]">
+      <main className="md:pl-[76px]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         <div>
           <h1 className="text-xl font-semibold text-ink flex items-center gap-2">
