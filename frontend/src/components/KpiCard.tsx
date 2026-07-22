@@ -116,18 +116,19 @@ export function KpiCard({
     <button
       type="button"
       onClick={() => setVolteada((v) => !v)}
-      className="w-full h-[180px] cursor-pointer rounded-2xl overflow-hidden [perspective:1200px] focus:outline-none"
+      className="w-full h-[180px] cursor-pointer rounded-2xl [perspective:1200px] focus:outline-none"
       aria-label={`${titulo}: ${texto}`}
+      aria-expanded={volteada}
     >
       <div
-        className="relative w-full h-full duration-500 flip-container"
+        className="relative w-full h-full transition-transform duration-500 flip-container"
         style={{
         transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
         {/* Cara frontal */}
         <div
-          className={`absolute top-0 left-0 w-full h-full card card-hover border-l-[5px] flip-front ${borde}`}
+          className={`card card-hover border-l-[5px] flip-face flip-front ${borde}`}
         >
 
         <div className="flex flex-col justify-between h-full p-5">
@@ -162,7 +163,7 @@ export function KpiCard({
 
         {/* Cara trasera */}
         <div
-        className={`absolute top-0 left-0 w-full h-full card border-l-[5px] flip-back ${borde}`}
+        className={`card border-l-[5px] flip-face flip-back ${borde}`}
         >
 
         <div className="flex flex-col justify-center items-center h-full p-5 text-center">
