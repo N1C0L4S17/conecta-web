@@ -60,13 +60,13 @@ export class DashboardService {
     return {
       totales: { encuestados: total, empleados },
       kpis: [
-        { clave: 'tasaEmpleo', titulo: 'Tasa de empleo', valor: this.pct(empleados, total), formato: 'pct' },
-        { clave: 'tasaEmprendimiento', titulo: 'Tasa de emprendimiento', valor: this.pct(emprendedores, total), formato: 'pct', detalle: `${emprendedores} con negocio` },
+        { clave: 'tasaEmpleo', titulo: 'Situación laboral actual', valor: this.pct(empleados, total), formato: 'pct' },
+        { clave: 'tasaEmprendimiento', titulo: 'Tipo de empleo (Emprendimiento)', valor: this.pct(emprendedores, total), formato: 'pct', detalle: `${emprendedores} con negocio` },
         { clave: 'tasaAdecuacion', titulo: 'Adecuación profesional', valor: this.pct(adecuados, empleados), formato: 'pct' },
-        { clave: 'tasaSectorPrivado', titulo: 'Sector privado', valor: this.pct(privadaSector, empleados), formato: 'pct' },
-        { clave: 'indiceSatisfaccion', titulo: 'Satisfacción laboral', valor: Math.round(satProm), formato: 'indice' },
-        { clave: 'tasaMenos12', titulo: 'Empleo < 12 meses', valor: this.pct(menos12, conTiempo), formato: 'pct' },
-        { clave: 'tasaMenos6', titulo: 'Empleo < 6 meses', valor: this.pct(menos6, conTiempo), formato: 'pct' },
+        { clave: 'tasaSectorPrivado', titulo: 'Sector de empleo', valor: this.pct(privadaSector, empleados), formato: 'pct' },
+        { clave: 'indiceSatisfaccion', titulo: 'Nivel de satisfacción laboral', valor: Math.round(satProm), formato: 'indice' },
+        { clave: 'tasaMenos12', titulo: 'Tiempo requerido para obtener el primer empleo < 12 meses', valor: this.pct(menos12, conTiempo), formato: 'pct' },
+        { clave: 'tasaMenos6', titulo: 'Tiempo requerido para obtener el primer empleo < 6 meses', valor: this.pct(menos6, conTiempo), formato: 'pct' },
       ],
     };
   }
