@@ -116,18 +116,19 @@ export function KpiCard({
     <button
       type="button"
       onClick={() => setVolteada((v) => !v)}
-      className="appearance-none bg-transparent p-0 border-0 text-left w-full h-[180px] [perspective:1000px] cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/40"
+      className="appearance-none bg-transparent p-0 border-0 text-left w-full h-[180px] overflow-hidden [perspective:1000px] cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest/40"
       aria-label={`${titulo}: ${texto}. Presiona para ver más detalle.`}
     >
       <div
         className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]"
         style={{
           transform: volteada ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transformOrigin: 'center center',
         }}
       >
         {/* Cara frontal */}
         <div
-          className={`card card-hover absolute inset-0 h-full p-5 border-l-[5px] flex flex-col justify-between [backface-visibility:hidden] ${borde}`}
+          className={`card card-hover absolute inset-0 top-0 left-0 h-full p-5 flex flex-col justify-between [backface-visibility:hidden] ${borde}`}
         >
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${
@@ -158,17 +159,19 @@ export function KpiCard({
 
         {/* Cara trasera */}
         <div
-          className={`card absolute inset-0 h-full p-5 flex flex-col justify-center items-center text-center overflow-auto [backface-visibility:hidden] ${borde}`}
-          style={{ transform: 'rotateY(180deg)' }}
+          className={`card absolute inset-0 top-0 left-0 h-full p-5 flex flex-col justify-center items-center text-center [backface-visibility:hidden] ${borde}`}
+          style={{
+            transform: 'rotateY(180deg)',
+            transformOrigin: 'center center',
+          }}
         >
-          <h3 className="text-lg font-bold text-forest mb-3">
-            {info?.titulo ?? titulo}
-          </h3>
+        <h3 className="text-lg font-bold text-forest mb-3">
+        {info?.titulo ?? titulo}
+        </h3>
 
-          <p className="text-sm text-muted leading-relaxed">
-            {info?.descripcion ??
-              'No hay información disponible para este indicador.'}
-          </p>
+        <p className="text-sm text-muted leading-relaxed">
+        {info?.descripcion}
+        </p>
         </div>
       </div>
     </button>
